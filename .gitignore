@@ -1,0 +1,6 @@
+/build*
+/install*
+/.venv
+/.cache
+/compile_commands.json
+.envrc

@@ -1,0 +1,9 @@
+[requires]
+fmt/7.1.3
+zlib/1.2.11
+
+[build_requires]
+doctest/2.4.4
+
+[generators]
+cmake
