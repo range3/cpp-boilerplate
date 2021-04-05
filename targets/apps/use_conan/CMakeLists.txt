@@ -15,6 +15,10 @@ if(${PROJECT_NAME_UPPERCASE}_INTERPROCEDURAL_OPTIMIZATION)
                         PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
 endif()
 
-target_link_libraries(${EXE_TARGET_NAME} PRIVATE CONAN_PKG::fmt CONAN_PKG::zlib)
+target_include_directories(${EXE_TARGET_NAME}
+                           PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+target_link_libraries(
+  ${EXE_TARGET_NAME} PRIVATE CONAN_PKG::fmt CONAN_PKG::zlib
+                             cpp_boilerplate::cpp_boilerplate_version)
 
 install(TARGETS ${EXE_TARGET_NAME} DESTINATION "${CMAKE_INSTALL_BINDIR}")

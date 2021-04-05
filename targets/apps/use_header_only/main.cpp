@@ -1,9 +1,7 @@
 #include <hello_header_only/hello_header_only.hpp>
 #include <memory>
 
-class ClassName {
-
-};
+class ClassName {};
 
 int main() {
   hello_header_only::doubleHello("Konnitiwa!");

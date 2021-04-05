@@ -85,6 +85,16 @@ if(${PROJECT_NAME_UPPERCASE}_IWYU)
   enable_iwyu_targets()
 endif()
 
+# Enable targets: format/check-format/fix-format by Format.cmake
+if(${PROJECT_NAME_UPPERCASE}_FORMAT)
+  include(cmake/CPM.cmake)
+  CPMAddPackage(
+    NAME Format.cmake
+    VERSION 1.7.0
+    GITHUB_REPOSITORY TheLartians/Format.cmake
+    OPTIONS "FORMAT_SKIP_CMAKE NO" "CMAKE_FORMAT_EXCLUDE (^|/)cmake")
+endif()
+
 # Encourage user to specify a build type (e.g. Release, Debug, etc.), otherwise
 # set it to Release.
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -115,6 +125,11 @@ if(${PROJECT_NAME_UPPERCASE}_BUILD_TESTS)
   add_subdirectory(tests)
 endif()
 
+#[[
+Target ${PROJECT_NAME}_version
+Install ${PROJECT_NAME_LOWERCASE}/version.h]]
+include(cmake/Version.cmake)
+
 # Install ${PROJECT_NAME}Config.cmake for find_package(<PROJECT_NAME>)
 # http://robotology.github.io/ycm/gh-pages/v0.12/module/InstallBasicPackageFiles.html
 include(cmake/InstallBasicPackageFiles.cmake)
@@ -125,29 +140,5 @@ install_basic_package_files(
   VARS_PREFIX ${PROJECT_NAME_UPPERCASE}
   NO_CHECK_REQUIRED_COMPONENTS_MACRO)
 
-# Install ${PROJECT_NAME_LOWERCASE}/version.hpp
-configure_file(${CMAKE_CURRENT_LIST_DIR}/cmake/version.hpp.in
-               include/${PROJECT_NAME_LOWERCASE}/version.hpp @ONLY)
-
-install(
-  FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME_LOWERCASE}/version.hpp
-  DESTINATION include/${PROJECT_NAME_LOWERCASE})
-
 # Add the uninstall target
 include(cmake/AddUninstallTarget.cmake)
-
-# Enable targets: format/check-format/fix-format by Format.cmake
-if(${PROJECT_NAME_UPPERCASE}_FORMAT)
-  include(cmake/CPM.cmake)
-  CPMAddPackage(
-    NAME Format.cmake
-    VERSION 1.7.0
-    GITHUB_REPOSITORY TheLartians/Format.cmake
-    OPTIONS "FORMAT_SKIP_CMAKE NO" "CMAKE_FORMAT_EXCLUDE (^|/)cmake")
-endif()
-
-# Enable clang-tidy
-if(${PROJECT_NAME_UPPERCASE}_CLANG_TIDY)
-
-endif()

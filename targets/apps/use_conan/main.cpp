@@ -1,14 +1,17 @@
 #include <fmt/core.h>
 #include <zlib.h>
 #include <vector>
+#include "cpp_boilerplate/version.h"
 
 using namespace std;
 
-int main() {
-  std::vector<int> v;
+auto main() -> int {
+  vector<int> v;
+
   fmt::print(
+      "cpp_boilerplate version is {}\n"
       "fmt version is {}\n"
       "zlib version is {}\n",
-      FMT_VERSION, ZLIB_VERSION);
+      CPP_BOILERPLATE_VERSION, FMT_VERSION, ZLIB_VERSION);
   return 0;
 }
