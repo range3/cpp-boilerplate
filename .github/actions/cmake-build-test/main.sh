@@ -1,12 +1,17 @@
 #!/bin/bash
-[ `whoami` = root ] || exec sudo su -c $0 root
+if [ x$(id -u) != x0 ]; then
+  printf -v cmd_str '%q ' "$0" "$@"
+  exec sudo su -c "$cmd_str" root
+fi
 
 set -ex
 
-BUILD_TYPE=Release
-PROFILE=clang
-export CC=clang
-export CXX=clang++
+BUILD_TYPE=${1:-Release}
+PROFILE=${2:-clang}
+if [ $PROFILE = clang ]; then
+  export CC=clang
+  export CXX=clang++
+fi
 
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
 . /etc/profile
@@ -31,6 +36,8 @@ cmake ..
 cp compile_commands.json ../
 cmake --build . -v -- -j 1 
 cmake --build . --target check-format
-cmake --build . --target clang-tidy
-cmake --build . --target iwyu
+if [ $PROFILE = clang ]; then
+  cmake --build . --target clang-tidy
+  cmake --build . --target iwyu
+fi
 ctest -C ${BUILD_TYPE} -VV

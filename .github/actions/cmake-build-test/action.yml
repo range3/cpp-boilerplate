@@ -1,6 +1,18 @@
 name: CMake Build and Test
 description: Build and Test using CMake
+inputs:
+  buildType:
+    description: 'CMAKE_BUILD_TYPE'
+    required: false
+    default: 'Release'
+  profile:
+    description: 'conan profile'
+    required: false
+    default: 'clang'
 runs:
   using: 'docker'
   image: '../../../docker/Dockerfile'
+  args:
+    - ${{ inputs.buildType }}
+    - ${{ inputs.profile }}
   entrypoint: '.github/actions/cmake-build-test/main.sh'
