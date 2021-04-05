@@ -10,6 +10,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        buildType: ['Debug', 'Release']
+        profile: ['default', 'clang']
 
     steps:
       - 
@@ -18,3 +23,6 @@ jobs:
       - 
         name: Build and Test
         uses: ./.github/actions/cmake-build-test
+        with:
+          buildType: ${{ matrix.buildType }}
+          profile: ${{ matrix.profile }}
