@@ -11,7 +11,7 @@
   - include-what-you-use
 - RPATH support for installed binaries and libraries
 - Uninstall target: `cmake --build . --target uninstall`
-- [Reasonable compiler warings](https://lefticus.gitbooks.io/cpp-best-practices/content/02-Use_the_Tools_Available.html)
+- [Reasonable compiler warnings](https://lefticus.gitbooks.io/cpp-best-practices/content/02-Use_the_Tools_Available.html)
 - [Doctest](https://github.com/onqtam/doctest)
 
 - TODO
