@@ -1,0 +1,6 @@
+name: CMake Build and Test
+description: Build and Test using CMake
+runs:
+  using: 'docker'
+  image: '../../../docker/Dockerfile'
+  entrypoint: '.github/actions/cmake-build-test/main.sh'

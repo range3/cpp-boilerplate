@@ -71,6 +71,22 @@ if(${PROJECT_NAME_UPPERCASE}_ENABLE_RPATH)
     USE_LINK_PATH)
 endif()
 
+if(CMAKE_EXPORT_COMPILE_COMMANDS)
+  # This dreadful mess is to communicate to clang-tidy the C++ system includes.
+  # It seems that CMake doesn't support using its own compile_commands.json
+  # database, and that clang-tidy doesn't pick up non-default system headers.
+  execute_process(
+    COMMAND
+      bash -c
+      "${CMAKE_CXX_COMPILER} -x c++ -Wp,-v /dev/null 2>&1 > /dev/null | grep '^ /' | grep -w 'c++'"
+    OUTPUT_VARIABLE COMPILER_HEADERS
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+  string(REGEX REPLACE "[ \n\t]+" ";" INCLUDE_COMPILER_HEADERS
+                       ${COMPILER_HEADERS})
+
+  set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES ${INCLUDE_COMPILER_HEADERS})
+endif()
+
 # clang-tidy
 if(${PROJECT_NAME_UPPERCASE}_CLANG_TIDY)
   include(cmake/ClangTidy.cmake)
