@@ -90,14 +90,14 @@ endif()
 # clang-tidy
 if(${PROJECT_NAME_UPPERCASE}_CLANG_TIDY)
   include(cmake/ClangTidy.cmake)
-  enable_clang_tidy()
+  # enable_clang_tidy()
   enable_clang_tidy_targets()
 endif()
 
 # include-what-you-use
 if(${PROJECT_NAME_UPPERCASE}_IWYU)
   include(cmake/IncludeWhatYouUse.cmake)
-  enable_iwyu()
+  # enable_iwyu()
   enable_iwyu_targets()
 endif()
 

@@ -28,6 +28,9 @@ cmake .. \
   -DCPP_BOILERPLATE_CLANG_TIDY=ON \
   -DCPP_BOILERPLATE_IWYU=ON
 cmake ..
+cp compile_commands.json ../
 cmake --build . -v -- -j 1 
 cmake --build . --target check-format
+cmake --build . --target clang-tidy
+cmake --build . --target iwyu
 ctest -C ${BUILD_TYPE} -VV
