@@ -1,4 +1,4 @@
-# Inherit from ./DockerfileBase
+# Inherit from ./base.Dockerfile
 FROM range3/cpp-boilerplate:latest
 
 # RUN \

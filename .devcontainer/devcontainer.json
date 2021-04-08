@@ -16,7 +16,9 @@
 	},
 
 	// Do ". /etc/profile" when vscode attaches devcontainers 
-	"userEnvProbe": "loginInteractiveShell",
+	// "userEnvProbe" does not handle exported bash function correctly
+	// see: https://github.com/microsoft/vscode-remote-release/issues/4848
+	// "userEnvProbe": "loginInteractiveShell",
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [

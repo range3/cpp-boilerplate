@@ -23,11 +23,13 @@ RUN \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
-COPY anyenv.sh /etc/profile.d/anyenv.sh
+COPY anyenv.sh /etc/profile.d/01-anyenv.sh
 
 RUN \
+  # direnv
+  echo 'eval "$(direnv hook bash)"' >> /etc/profile.d/10-direnv.sh \
   # anyenv
-  git clone https://github.com/anyenv/anyenv /opt/anyenv \
+  && git clone https://github.com/anyenv/anyenv /opt/anyenv \
   && update-alternatives --install /usr/bin/anyenv anyenv /opt/anyenv/bin/anyenv 100 \
   && . /etc/profile \
   && anyenv install --force-init \
@@ -37,6 +39,7 @@ RUN \
   . /etc/profile \
   # pyenv-virtualenv
   && git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv \
+  && echo 'eval "$(pyenv virtualenv-init -)"' >> /etc/profile.d/02-pyenv-virtualenv.sh \
   # python
   && export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -69,10 +72,6 @@ RUN \
     https://gitlab.com/akim.saidani/conan-bashcompletion/-/raw/master/conan-completion
 
 USER vscode
-RUN \
-  # direnv
-  echo 'eval "$(direnv hook bash)"' >> ~/.bashrc \
-  && echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
 RUN \
   # conan profile
   . /etc/profile \

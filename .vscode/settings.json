@@ -9,4 +9,5 @@
   "C_Cpp.intelliSenseEngine": "Disabled",
   "clangd.onConfigChanged": "restart",
   "clangd.checkUpdates": true,
+  "cmake.cmakePath": "/opt/anyenv/envs/pyenv/shims/cmake",
 }
